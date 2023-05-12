@@ -17,4 +17,8 @@ class Berita extends Model
     public static function slugify($judul) {
         return Str::slug($judul, '-', 'id');
     }
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }

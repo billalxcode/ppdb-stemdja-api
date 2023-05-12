@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 class BeritaController extends Controller
 {
     public function all() {
-        $data = Berita::all();
+        $data = Berita::with('user')->get();
 
         return response()->json([
-            'error' => false,
+            'error' => true,
             'data' => $data
         ]);
     }
 
     public function getpost($berita_id) {
-        $berita = Berita::find($berita_id);
+        $berita = Berita::with('user')->find($berita_id);
 
         return response()->json([
             'error' => false,

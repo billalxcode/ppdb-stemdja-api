@@ -23,8 +23,8 @@ Route::prefix('v1')->as('v1')->middleware('api')->group(function() {
     });
 
     Route::group(['prefix' => 'berita', 'as' => 'berita'], function () {
-        Route::get('', [BeritaController::class, 'all'])->name('all');
+        Route::get('', [BeritaController::class, 'all'])->name('all')->withoutMiddleware('api');
         Route::post('', [BeritaController::class, 'create'])->name('create');
-        Route::get('{post_id}', [BeritaController::class, 'getpost'])->name('get');
+        Route::get('{post_id}', [BeritaController::class, 'getpost'])->name('get')->withoutMiddleware('api');
     });
 });
