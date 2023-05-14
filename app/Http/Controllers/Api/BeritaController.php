@@ -19,8 +19,8 @@ class BeritaController extends Controller
         ]);
     }
 
-    public function getpost($berita_id) {
-        $berita = Berita::with('user')->find($berita_id);
+    public function getpost($slug) {
+        $berita = Berita::with('user')->where('slug', $slug);
 
         return response()->json([
             'error' => false,
@@ -43,14 +43,20 @@ class BeritaController extends Controller
         ]);
     }
 
-    public function delete(BeritaDeleteRequest $request) {
-        $validated = $request->validated();
-        $berita = Berita::where('slug', $validated['slug']);
-        $berita->delete();
-
-        return response()->json([
-            'error' => false,
-            'message' => 'berita has been removed from database!'
-        ]);
+    public function delete($slug) {
+        $berita = Berita::where('slug', $slug);
+        if (!$berita) {
+            return response()->json([
+                'error' => true,
+                'message' => 'berita not found'
+            ], 404);
+        } else {
+            $berita->delete();
+    
+            return response()->json([
+                'error' => false,
+                'message' => 'berita has been removed from database!'
+            ]);
+        }
     }
 }
