@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BeritaCreateRequest;
+use App\Http\Requests\BeritaDeleteRequest;
 use App\Models\Berita;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,17 @@ class BeritaController extends Controller
         return response()->json([
             'error' => false,
             'data' => $response
+        ]);
+    }
+
+    public function delete(BeritaDeleteRequest $request) {
+        $validated = $request->validated();
+        $berita = Berita::where('slug', $validated['slug']);
+        $berita->delete();
+
+        return response()->json([
+            'error' => false,
+            'message' => 'berita has been removed from database!'
         ]);
     }
 }

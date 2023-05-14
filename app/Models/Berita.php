@@ -15,7 +15,7 @@ class Berita extends Model
     ];
 
     public static function slugify($judul) {
-        return Str::slug($judul, '-', 'id');
+        return Str::slug($judul, '-', 'id') . Str::random();
     }
 
     public function user() {
